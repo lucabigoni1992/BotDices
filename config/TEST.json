@@ -1,15 +1,15 @@
 {  
     "DICES_Launch_SUCCESS":{
-        "Launch1" : "5D20",
-        "Launch2" : "5D20+7d8",
-        "Launch3" : "5D20+11",
-        "Launch4" : "5D20+13+2",
-        "Launch5" : "5D20+5D8+123"
-    },
-    "DICES_Launch_INSUCCESS":{
-        "Launch1" : "AASDADA",
-        "Launch2" : "AAADS 5D20+11",
-        "Launch3" : "CCC 5D20+13+2",
-        "Launch4" : "ASDA+123"
+        "Launch1" : "!5D20",
+        "Launch2" : "!5D20+7d8",
+        "Launch3" : "!5D20+11",
+        "Launch4" : "!5D20+13+2",
+        "Launch5" : "!88d20+!88d20 +15-99",
+        "Launch6" : "!88d20-!88d20+!88d20 +15-99",
+        "Launch7" : "-!88d20-!88d20+!88d20 +15-99",
+        "Launch8" : "+!88d20-!88d20+!88d20 +15-99",
+        "Launch9" : "+15+!88d20-!88d20+!88d20 ",
+        "Launch10" : "+!88d20-99-!88d20+!88d20 +15-99",
+        "Launch11" : "+!88d20-99-!88d20+15+!88d20 "
     }
 }
