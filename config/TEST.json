@@ -1,0 +1,15 @@
+{  
+    "DICES_Launch_SUCCESS":{
+        "Launch1" : "5D20",
+        "Launch2" : "5D20+7d8",
+        "Launch3" : "5D20+11",
+        "Launch4" : "5D20+13+2",
+        "Launch5" : "5D20+5D8+123"
+    },
+    "DICES_Launch_INSUCCESS":{
+        "Launch1" : "AASDADA",
+        "Launch2" : "AAADS 5D20+11",
+        "Launch3" : "CCC 5D20+13+2",
+        "Launch4" : "ASDA+123"
+    }
+}
