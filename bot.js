@@ -4,19 +4,14 @@ const discord = require('./node_modules/discord.js');
 const test = require('./config/TEST.json');
 const client = new discord.Client();
 const regx = /((\-|\+?)!([0-9]{1,})([d|D]{1})([0-9]{1,}))|((\-|\+)([0-9]{0,2}))/g;
-try {
 
-    console.log("Application WITH TOKEN :  ", process.env.BOT_TOKEN);
-    process.on('uncaughtException', function (err) {
-        console.log('Caught exception: ' + err);
-    });
-    client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN);
 
-    console.log("after log in :  ", process.env.BOT_TOKEN);
-} catch (e) {
-    console.log(e);
-    // [Error: Uh oh!]
-}
+process.on('uncaughtException', function (err) {
+    console.log('Caught exception: ' + err);
+});
+
+
 client.on('ready', () => {
     console.log("il nostro bot è loggato");
     console.log("si è username: ", client.user.username);
@@ -66,7 +61,7 @@ function sendMessage(dices, message) {
         //  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
         // .setImage('https://i.imgur.com/wSTFkRM.png')
         .setTimestamp();
-    var footer = 'All Data Dices:';
+    var footer = '';
     for (var d = 0; d < dices.contentValuesDices.length; d++) {
         var dice = dices.contentValuesDices[d];
         var lunces = "";
