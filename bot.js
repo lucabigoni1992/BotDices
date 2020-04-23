@@ -20,10 +20,7 @@ client.on('message', function (message) {
     console.log("si è messaggio inviato da: ", message.author.username, " -> messaggio : ", message.content);
     var dices = Poweeeerrr(message.content);
     if (dices.length == 0 || !dices.isVaid) return;
-
     message.channel.send(sendMessage(dices, message));
-    //    message.reply('your dices has this result! ' + JSON.stringify(dices)).catch(err => console.log(err));
-    //    message.channel.send('your dices has this result! ' + JSON.stringify(dices)).catch(err => console.log(err));
 })
 
 function Poweeeerrr(message) {
@@ -42,7 +39,6 @@ function Poweeeerrr(message) {
             SetDiValori.addDadi(dado);
         }
     };
-    console.log(SetDiValori);
     return SetDiValori;
 }
 
@@ -65,9 +61,7 @@ function sendMessage(dices, message) {
     for (var d = 0; d < dices.contentValuesDices.length; d++) {
         var dice = dices.contentValuesDices[d];
         var lunces = "";
-        console.log(dice)
         for (var l = 0; l < dice.dadi.length; l++) {
-            console.log(dice.dadi[l])
             lunces += "N°" + l.toString() + " " + 'd' + dice.faces + " : " + dice.dadi[l] + '\n';
         }
         footer += '\n' + dice.nLaunch + 'd' + dice.faces + ' sum: '+dice.operation+dice.sum;
@@ -83,7 +77,6 @@ function sendMessage(dices, message) {
     mess.addField('\u200B', '\u200B', false);
     for (var d = 0; d < dices.contentValuesSingleSum.length; d++) {
         var in_val = dices.contentValuesSingleSum[d];
-        console.log(in_val)
         footer += '\n' + 'Val: ' + in_val.operation + in_val.val;
         mess.addFields(
             {
