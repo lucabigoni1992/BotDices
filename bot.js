@@ -4,10 +4,19 @@ const discord = require('discord.js');
 const test = require('./config/TEST.json');
 const client = new discord.Client();
 const regx = /((\-|\+?)!([0-9]{1,})([d|D]{1})([0-9]{1,}))|((\-|\+)([0-9]{0,2}))/g;
-console.log("Application WITH TOKEN :  ", process.env.BOT_TOKEN);
-client.login(process.env.BOT_TOKEN);
+try {
 
+    console.log("Application WITH TOKEN :  ", process.env.BOT_TOKEN);
+    process.on('uncaughtException', function (err) {
+        console.log('Caught exception: ' + err);
+    });
+    client.login(process.env.BOT_TOKEN);
 
+    console.log("after log in :  ", process.env.BOT_TOKEN);
+} catch (e) {
+    console.log(e);
+    // [Error: Uh oh!]
+}
 client.on('ready', () => {
     console.log("il nostro bot è loggato");
     console.log("si è username: ", client.user.username);
@@ -64,10 +73,10 @@ function sendMessage(dices, message) {
         for (var l = 0; l < dice.dadi.length; l++) {
             lunces += "N°" + l.toString() + " " + 'd' + dice.faces + " : " + dice.dadi[l] + '\n';
         }
-        footer += '\n' + dice.nLaunch + 'd' + dice.faces + ' sum: '+dice.operation+dice.sum;
+        footer += '\n' + dice.nLaunch + 'd' + dice.faces + ' sum: ' + dice.operation + dice.sum;
         mess.addFields(
             {
-                name: 'dice : ' + (dice.nLaunch +1)+ 'd' + dice.faces,
+                name: 'dice : ' + (dice.nLaunch + 1) + 'd' + dice.faces,
                 value: lunces,
                 inline: true
             }
