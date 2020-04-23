@@ -21,3 +21,4 @@ npm i dotenv
 
 il server in cloud è :
 https://dashboard.heroku.com/
+il server funziona con il Procfile 
