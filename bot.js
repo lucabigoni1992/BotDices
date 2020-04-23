@@ -1,6 +1,6 @@
 require('dotenv').config();
 console.log("Application start at ... " + Date(Date.now()).toString());
-const discord = require('discord.js');
+const discord = require('./node_modules/discord.js');
 const test = require('./config/TEST.json');
 const client = new discord.Client();
 const regx = /((\-|\+?)!([0-9]{1,})([d|D]{1})([0-9]{1,}))|((\-|\+)([0-9]{0,2}))/g;
