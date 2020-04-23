@@ -18,3 +18,6 @@ installiamo pacchetti discord
 npm i discord.js 
 installiamo pacchetti dotenv
 npm i dotenv
+
+il server in cloud è :
+https://dashboard.heroku.com/

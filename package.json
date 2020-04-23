@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@angular/cli": "^9.1.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0"
   }
