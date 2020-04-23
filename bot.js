@@ -20,7 +20,10 @@ client.on('message', function (message) {
     console.log("si è messaggio inviato da: ", message.author.username, " -> messaggio : ", message.content);
     var dices = Poweeeerrr(message.content);
     if (dices.length == 0 || !dices.isVaid) return;
-    message.reply('your dices has this result! ' + JSON.stringify(dices)).catch(err => console.log(err));
+
+    message.channel.send(sendMessage(dices, message));
+    //    message.reply('your dices has this result! ' + JSON.stringify(dices)).catch(err => console.log(err));
+    //    message.channel.send('your dices has this result! ' + JSON.stringify(dices)).catch(err => console.log(err));
 })
 
 function Poweeeerrr(message) {
@@ -29,7 +32,6 @@ function Poweeeerrr(message) {
     var SetDiValori = new ContentDices();
     for (var td = 0; td < array.length; td++) {
         var dice = array[td];
-        //   console.log(dice);
         if (dice[6]) {
             SetDiValori.addSingleValue(new valResult(parseInt(dice[8]), dice[7]));
         }
@@ -46,10 +48,63 @@ function Poweeeerrr(message) {
 
 
 function randomInt(max) {
-    return Math.floor(Math.random() * max) + 1
+    return Math.floor(Math.random() * max) + 1;
 }
 
+function sendMessage(dices, message) {
+    var mess = new discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('Your dices!!! POWERRRRRRRR!')
+        //    .setURL('https://discord.js.org/')
+        .setAuthor('By Luca Bigoni')
+        .setDescription("Launch of :" + message.author.username)
+        //  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+        // .setImage('https://i.imgur.com/wSTFkRM.png')
+        .setTimestamp();
+    var footer = 'All Data Dices:';
+    for (var d = 0; d < dices.contentValuesDices.length; d++) {
+        var dice = dices.contentValuesDices[d];
+        var lunces = "";
+        console.log(dice)
+        for (var l = 0; l < dice.dadi.length; l++) {
+            console.log(dice.dadi[l])
+            lunces += "N°" + l.toString() + " " + 'd' + dice.faces + " : " + dice.dadi[l] + '\n';
+        }
+        footer += '\n' + dice.nLaunch + 'd' + dice.faces + ' sum: '+dice.operation+dice.sum;
+        mess.addFields(
+            {
+                name: 'dice : ' + (dice.nLaunch +1)+ 'd' + dice.faces,
+                value: lunces,
+                inline: true
+            }
+        );
+    }
 
+    mess.addField('\u200B', '\u200B', false);
+    for (var d = 0; d < dices.contentValuesSingleSum.length; d++) {
+        var in_val = dices.contentValuesSingleSum[d];
+        console.log(in_val)
+        footer += '\n' + 'Val: ' + in_val.operation + in_val.val;
+        mess.addFields(
+            {
+                name: 'Val: ' + in_val.operation + in_val.val,
+                value: in_val.val,
+                inline: true
+            }
+        );
+    }
+    footer += '\n' + 'Total: ' + dices.sum;
+    mess.addField('\u200B', '\u200B', false);
+    mess.addFields(
+        {
+            name: 'All Data Dices:',
+            value: footer,
+            inline: true
+        });
+
+    mess.setFooter('Good game');
+    return mess;
+}
 class ContentDices {
     isVaid = false;
     sum = 0;
@@ -59,16 +114,12 @@ class ContentDices {
 
     addDadi(in_dice, sumOrLess) {
         this.contentValuesDices.push(in_dice);
-        console.log("sumOrLess: ", sumOrLess);
-        this.sum += (sumOrLess == '-' ? (-1 * in_dice.sum) : in_dice.sum);
-        console.log(" this.sum: ", this.sum);
+        this.sum += (in_dice.operation == '-' ? (-1 * in_dice.sum) : in_dice.sum);
         this.isVaid = true;//diventa valido se ho almeno un dado
     }
-    addSingleValue(in_val, sumOrLess) {
+    addSingleValue(in_val) {
         this.contentValuesSingleSum.push(in_val);
-        console.log("sumOrLess: ", sumOrLess);
-        this.sum += (sumOrLess == '-' ? (-1 * in_val.val) : in_val.val);
-        console.log(" this.sum: ", this.sum);
+        this.sum += (in_val.operation == '-' ? (-1 * in_val.val) : in_val.val);
     }
 }
 
