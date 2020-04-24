@@ -78,7 +78,6 @@ function sendMessage(dices, message) {
         );
     }
 
-    mess.addField('\u200B', '\u200B', false);
     for (var d = 0; d < dices.contentValuesSingleSum.length; d++) {
         var in_val = dices.contentValuesSingleSum[d];
         footer += '\n' + 'Val: ' + in_val.operation + in_val.val;
@@ -91,7 +90,6 @@ function sendMessage(dices, message) {
         );
     }
     footer += '\n' + 'Total: ' + dices.sum;
-    mess.addField('\u200B', '\u200B', false);
     mess.addFields(
         {
             name: 'All Data Dices:',
