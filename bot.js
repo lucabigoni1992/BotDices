@@ -2,6 +2,7 @@ require('dotenv').config();
 console.log("Application start at ... " + Date(Date.now()).toString());
 const discord = require('./node_modules/discord.js');
 const test = require('./config/TEST.json');
+const package = require('./package.json');
 const client = new discord.Client();
 const regx = /((\-|\+?)!([0-9]{1,})([d|D]{1})([0-9]{1,}))|((\-|\+)([0-9]{0,2}))/g;
 
@@ -56,24 +57,33 @@ function sendMessage(dices, message) {
         .setColor('#0099ff')
         .setTitle('Your dices!!! POWERRRRRRRR!')
         //    .setURL('https://discord.js.org/')
-        .setAuthor('By Luca Bigoni')
+        .setAuthor('By Luca Bigoni version')
         .setDescription("Launch of :" + message.author.username)
         //  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
         // .setImage('https://i.imgur.com/wSTFkRM.png')
         .setTimestamp();
     var footer = '';
+    var footerLog1And20 = new failCrit();
     for (var d = 0; d < dices.contentValuesDices.length; d++) {
         var dice = dices.contentValuesDices[d];
         var lunces = "";
         for (var l = 0; l < dice.dadi.length; l++) {
             lunces += "N°" + l.toString() + " " + 'd' + dice.faces + " : " + dice.dadi[l] + '\n';
+            if (dice.faces == 20) {
+                if (dice.dadi[l] == 1)
+                    footerLog1And20.addFail();
+                else if (dice.dadi[l] == 20)
+                    footerLog1And20.addCrit();
+            }
         }
         footer += '\n' + dice.nLaunch + 'd' + dice.faces + ' sum: ' + dice.operation + dice.sum;
+        if (footerLog1And20.hasCrit() || footerLog1And20.hasFial())
+            footer += '\n Total Crit:' + footerLog1And20.nCrit + ' Total Fail:' + footerLog1And20.nFail ;
         mess.addFields(
             {
                 name: 'dice : ' + (dice.nLaunch + 1) + 'd' + dice.faces,
                 value: lunces,
-                inline: true
+                inline: d != dices.contentValuesDices.length - 1
             }
         );
     }
@@ -89,15 +99,14 @@ function sendMessage(dices, message) {
             }
         );
     }
-    footer += '\n' + 'Total: ' + dices.sum;
     mess.addFields(
         {
             name: 'All Data Dices:',
-            value: footer,
-            inline: true
+            value: footer + '\nTotal: ' + dices.sum,
+            inline: false
         });
 
-    mess.setFooter('Good game');
+    mess.setFooter('Good game AppVersion ' + package.version);
     return mess;
 }
 class ContentDices {
@@ -145,4 +154,25 @@ class valResult {
         this.val = in_val ? in_val : 0;
         this.operation = in_operation ? in_operation : '+';
     }
+}
+class failCrit {
+    nFail = 0;
+    nCrit = 0;
+    constructor(in_nFail, in_nCrit) {
+        this.nFail = in_nFail ? in_nFail : 0;
+        this.nCrit = in_nCrit ? in_nCrit : '+';
+    }
+    addFail() {
+        this.nFail += 1;
+    }
+    addCrit() {
+        this.nCrit += 1;
+    }
+    hasCrit() {
+        return this.nCrit > 0
+    }
+    hasFial() {
+        return this.nFail > 0
+    }
+
 }
