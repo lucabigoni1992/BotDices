@@ -160,7 +160,7 @@ class failCrit {
     nCrit = 0;
     constructor(in_nFail, in_nCrit) {
         this.nFail = in_nFail ? in_nFail : 0;
-        this.nCrit = in_nCrit ? in_nCrit : '+';
+        this.nCrit = in_nCrit ? in_nCrit : 0;
     }
     addFail() {
         this.nFail += 1;
