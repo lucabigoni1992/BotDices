@@ -7,22 +7,34 @@ const client = new discord.Client();
 
 client.login(process.env.BOT_TOKEN);
 
-process.on('uncaughtException', function (err) {
-    console.log('Caught exception: ' + err);
-});
+process.on('unhandledRejection', (reason, p) => {
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+  })
+  .on('uncaughtException', err => {
+    console.error(err, 'Uncaught Exception thrown');
+    process.exit(1);
+  });
 
 
 client.on('ready', () => {
     console.log("il nostro bot è loggato");
-    console.log("si è username: ", client.user.username);
-    console.log("si è tag: ", client.user.tag);
+    try {
+        console.log("si è username: ", client.user.username);
+        console.log("si è tag: ", client.user.tag);
+    } catch (err) {
+        next(err);
+    }
 })
 
 
 client.on('message', function (message) {
-    if (message.author.bot) return;
-    console.log("si è messaggio inviato da: ", message.author.username, " -> messaggio : ", message.content);
-    var dices = genericClass.Poweeeerrr(message.content);
-    if (dices.length == 0 || !dices.isVaid) return;
-    message.channel.send(genericClass.sendMessage(dices, message));
+    try {
+        if (message.author.bot) return;
+        console.log("si è messaggio inviato da: ", message.author.username, " -> messaggio : ", message.content);
+        var dices = genericClass.Poweeeerrr(message.content);
+        if (dices.length == 0 || !dices.isVaid) return;
+        message.channel.send(genericClass.sendMessage(dices, message));
+    } catch (err) {
+        next(err);
+    }
 })
