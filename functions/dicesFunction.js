@@ -37,7 +37,7 @@ function sendMessage(dices, message) {
         .setColor('#0099ff')
         .setTitle('Your dices!!! POWERRRRRRRR!')
         //    .setURL('https://discord.js.org/')
-        .setAuthor('By Luca Bigoni version')
+        .setAuthor('By Luca Bigoni')
         .setDescription("Launch of :" + message.author.username)
         //  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
         // .setImage('https://i.imgur.com/wSTFkRM.png')
