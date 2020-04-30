@@ -61,7 +61,7 @@ function sendMessage(dices, message) {
             footer += '\n Total Crit:' + footerLog1And20.nCrit + ' Total Fail:' + footerLog1And20.nFail;
         mess.addFields(
             {
-                name: 'dice : ' + (dice.nLaunch + 1) + 'd' + dice.faces,
+                name: 'dice : ' + (dice.nLaunch) + 'd' + dice.faces,
                 value: lunces,
                 inline: d != dices.contentValuesDices.length - 1
             }
