@@ -28,7 +28,7 @@ client.on('ready', () => {
 
 
 client.on('message', function (message) {
-    try {
+    try { 
         if (message.author.bot) return;
         var multiLunches = message.content.toString().split(';;');
         var logghiamo=false;
