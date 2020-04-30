@@ -31,12 +31,14 @@ client.on('message', function (message) {
     try {
         if (message.author.bot) return;
         var multiLunches = message.content.toString().split(';;');
+        var logghiamo=false;
         for (var SplitDices = 0; SplitDices < multiLunches.length; SplitDices++) {
             var dices = genericClass.Poweeeerrr(multiLunches[SplitDices]);
             if (dices.length == 0 || !dices.isVaid) continue;
+            logghiamo=true;
             message.channel.send(genericClass.sendMessage(dices, message));
         }
-        if (multiLunches.length > 0)
+        if (logghiamo)
             console.log("si è messaggio inviato da: ", message.author.username, " -> messaggio : ", message.content);
     } catch (err) {
         next(err);
